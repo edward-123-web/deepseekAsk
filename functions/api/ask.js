@@ -14,8 +14,21 @@ export async function onRequestPost(context) {
       );
     }
 
-    // Get API key from environment variable or use default
-    const apiKey = context.env.DEEPSEEK_API_KEY || 'sk-0fdaddd9f0db4e70821938381de23af6';
+    // Get API key from Cloudflare Workers secret
+    const apiKey = context.env.DEEPSEEK_API_KEY;
+    
+    if (!apiKey) {
+      return new Response(
+        JSON.stringify({ 
+          error: 'API key not configured. Please set DEEPSEEK_API_KEY in Cloudflare Workers secrets.', 
+          success: false 
+        }),
+        {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
     
     // Call DeepSeek API
     const response = await fetch('https://api.deepseek.com/v1/chat/completions', {

@@ -65,14 +65,38 @@ It accepts POST requests with JSON body:
 }
 ```
 
-## Configuration
+## Configuration - Setting the API Secret
 
-The DeepSeek API key is configured in `functions/api/ask.js`. 
+The DeepSeek API key must be set as a **secret** in Cloudflare Workers/Pages. The code requires `DEEPSEEK_API_KEY` to be configured.
 
-**Note**: For production, consider using Cloudflare Environment Variables to store the API key securely:
-1. Go to Pages → Settings → Environment Variables
-2. Add `DEEPSEEK_API_KEY` variable
-3. Update `ask.js` to use `context.env.DEEPSEEK_API_KEY`
+### Setting the Secret in Cloudflare Dashboard
+
+1. Go to your Cloudflare Dashboard
+2. Navigate to **Pages** → Select your project
+3. Go to **Settings** → **Environment Variables**
+4. Click **Add variable**
+5. Set:
+   - **Variable name**: `DEEPSEEK_API_KEY`
+   - **Value**: Your DeepSeek API key (e.g., `sk-your-api-key-here`)
+   - **Environment**: Select **Production** (and optionally **Preview**)
+6. Click **Save**
+
+### Setting the Secret via Wrangler CLI
+
+For local development or CLI deployment:
+
+1. Create a `.dev.vars` file in the project root (this file is gitignored):
+   ```
+   DEEPSEEK_API_KEY=sk-your-api-key-here
+   ```
+
+2. For production deployment with secrets:
+   ```bash
+   wrangler secret put DEEPSEEK_API_KEY
+   ```
+   Then enter your API key when prompted.
+
+**Important**: Never commit your API key to git! The `.dev.vars` file is already in `.gitignore`.
 
 ## Usage
 
