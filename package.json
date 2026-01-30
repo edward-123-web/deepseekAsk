@@ -1,0 +1,16 @@
+{
+  "name": "deepseek-ask",
+  "version": "1.0.0",
+  "description": "DeepSeek Q&A Interface for Cloudflare Pages",
+  "scripts": {
+    "deploy": "wrangler pages deploy ."
+  },
+  "keywords": [
+    "deepseek",
+    "cloudflare",
+    "pages"
+  ],
+  "author": "",
+  "license": "MIT"
+}
+
